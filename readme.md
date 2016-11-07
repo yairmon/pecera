@@ -1,9 +1,9 @@
-Proyecto Vida Artificial
+# Proyecto Vida Artificial
 
-Dependencias:
-  -Ruby
-  -Gema de Gosu
-  -Gema de Chingu
+**Dependencias:**
+- Ruby
+- Gema de Gosu
+- Gema de Chingu
 
-Archivo principal
-  main.rb
+**Archivo principal**
+- main.rb
