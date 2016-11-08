@@ -38,7 +38,7 @@ class Pez < Chingu::GameObject
     @direccion.mover
     @x = @direccion.get_x
     @y = @direccion.get_y
-    #print "corrds (" + @direccion.get_x.to_s + "," + @direccion.get_y.to_s + ")\n"
+    #print "cords (" + @direccion.get_x.to_s + "," + @direccion.get_y.to_s + ")\n"
   end #def
 
   #
