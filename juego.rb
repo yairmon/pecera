@@ -5,7 +5,7 @@ require 'chingu'
 include Gosu
 include Chingu
 
-require_relative "objetos/pez"
+require_relative "logica/motor"
 require_relative "objetos/fondo"
 
 #
@@ -22,16 +22,17 @@ class Juego < Chingu::Window
     super(800,800)
     self.caption = "Proyecto Vida Artificial" # Titulo de la ventana
     self.input = {:esc => :exit} # Al presionar esc, se cierra la ventana
-    
-    #switch_game_state(Fondo)
-    Pez.create
-    Pez.create
-    Pez.create
-    Pez.create
-    Pez.create
-    Pez.create
-    Pez.create
-    Pez.create
+
+    switch_game_state(Fondo)
+    push_game_state(Motor)
+    # Pez.create
+    # Pez.create
+    # Pez.create
+    # Pez.create
+    # Pez.create
+    # Pez.create
+    # Pez.create
+    # Pez.create
   end #def
 
 

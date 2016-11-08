@@ -24,7 +24,7 @@ class Direccion
     @movimientos = movimientos
     @desbordamientox = imagenx / 2
     @desbordamientoy = imageny / 2
-    print "Se ha seleccionado la direccion en: " + @dir.to_s + "\n"
+    #print "Se ha seleccionado la direccion en: " + @dir.to_s + "\n"
   end #def
 
   #
@@ -53,7 +53,7 @@ class Direccion
     if @contador > @movimientos || (@posx - @desbordamientox) < 0 || (@posy - @desbordamientoy) < 0 || (@posx + @desbordamientox) > @maxx || (@posy + @desbordamientoy) > @maxy
       self.cambiar_direccion
       @contador = 0
-      print "Se ha cambiado la direccion en: " + @dir.to_s + "\n"
+      #print "Se ha cambiado la direccion en: " + @dir.to_s + "\n"
     end #if
     case @dir
     when 0; @posx -= @velocidad
