@@ -36,14 +36,18 @@ class Motor < Chingu::GameState
     Pez.each_collision(Pez) do |pez1, pez2|
       pez1.colision_pez(pez2)
     end # each
+
+    $window.caption = "FPS: #{$window.fps} - Objetos: #{current_game_state.game_objects.size} - Peces: #{Pez.size}"
   end # def
 
   #
   #  Override:
-  #  Esta funcion dibuja en el plano
+  #  Esta funcion se ejecuta cuando se abandona el estado actual
   #
-  def draw
-    super
+  def finalize
+      Pez.each do |pez|
+        pez.destroy
+      end
   end # def
 
 end # class

@@ -7,6 +7,7 @@ include Chingu
 
 require_relative "logica/motor"
 require_relative "objetos/fondo"
+require_relative "objetos/menu"
 
 #
 # Juego:
@@ -21,9 +22,10 @@ class Juego < Chingu::Window
   def initialize
     super(800,800)
     self.caption = "Proyecto Vida Artificial" # Titulo de la ventana
-    self.input = {:esc => :exit} # Al presionar esc, se cierra la ventana
+    self.input = {:esc => :exit, :q => method(:cambiar_estado)} # Al presionar esc, se cierra la ventana
 
-    switch_game_state(Fondo)
+    push_game_state(Fondo)
+    push_game_state(Menu)
     push_game_state(Motor)
     # Pez.create
     # Pez.create
@@ -35,6 +37,17 @@ class Juego < Chingu::Window
     # Pez.create
   end #def
 
+  #
+  # Cambiar_Estado:
+  # Para intercambiar entre el menú y la pecera
+  #
+  def cambiar_estado
+    if current_game_state.class == Motor
+      switch_game_state(Menu)
+    else
+      switch_game_state(Motor)
+    end # if
+  end # def
 
   #
   # Override
