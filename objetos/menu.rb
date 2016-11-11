@@ -20,9 +20,9 @@ class Menu < Chingu::GameState
     @spinner = ["|", "/", "-", "\\", "|", "/", "-", "\\"]
     @spinner_index = 0.0
     @posicion = 0
-    @texto_menu = [{"texto" => "-> Peces: ", "cantidad" => "0"},
-                  {"texto" => "Tiburones: ", "cantidad" => "0"},
-                  {"texto" => "Reproduccion cada (seg): ", "cantidad" => "0"}]
+    @texto_menu = [["-> Peces: ", "0"],
+                  ["Tiburones: ", "0"],
+                  ["Reproduccion cada (seg): ", "0"]]
 
     @texto0 = "-> Peces: "
     @texto1 = "Tiburones: "
@@ -54,11 +54,11 @@ class Menu < Chingu::GameState
       end # if
       print "Se ha presionado la tecla: Arriba\n"
     elsif id == Button::KbRight
-      @texto_menu[@posicion]['cantidad'] = (@texto_menu[@posicion]['cantidad'].to_i + 1).to_s
+      @texto_menu[@posicion][1] = (@texto_menu[@posicion][1].to_i + 1).to_s
       print "Se ha presionado la tecla: Derecha\n"
     elsif id == Button::KbLeft
-      if @texto_menu[@posicion]['cantidad'] != "0"
-        @texto_menu[@posicion]['cantidad'] = (@texto_menu[@posicion]['cantidad'].to_i - 1).to_s
+      if @texto_menu[@posicion][1] != "0"
+        @texto_menu[@posicion][1] = (@texto_menu[@posicion][1].to_i - 1).to_s
       end # if
       print "Se ha presionado la tecla: Izquierda\n"
     elsif id == Button::Kb0; agregar_numero("0")
@@ -72,10 +72,10 @@ class Menu < Chingu::GameState
     elsif id == Button::Kb8; agregar_numero("8")
     elsif id == Button::Kb9; agregar_numero("9")
     elsif id == Button::KbBackspace
-      if @texto_menu[@posicion]['cantidad'].length > 1
-        @texto_menu[@posicion]['cantidad'] = @texto_menu[@posicion]['cantidad'].chop
+      if @texto_menu[@posicion][1].length > 1
+        @texto_menu[@posicion][1] = @texto_menu[@posicion][1].chop
       else
-        @texto_menu[@posicion]['cantidad'] = "0"
+        @texto_menu[@posicion][1] = "0"
       end # if
     elsif id == 40 # Tecla Enter (No se reconoce el comando Button::KbEnter)
       print "Se ha presionado la tecla: Enter\n"
@@ -90,14 +90,14 @@ class Menu < Chingu::GameState
     # str num: Es el numero que se agrega al final
     #
     def agregar_numero(num)
-      @texto_menu[@posicion]['cantidad'] = ((@texto_menu[@posicion]['cantidad'] + num).to_i).to_s
+      @texto_menu[@posicion][1] = ((@texto_menu[@posicion][1] + num).to_i).to_s
     end # def
 
     # Dependiendo de la posicion colocar la guia
     (0...@texto_menu.size).each do |i|
-      @texto_menu[i]['texto'] = @texto_menu[i]['texto'].delete '->'
+      @texto_menu[i][0] = @texto_menu[i][0].delete '->'
     end # each
-    @texto_menu[@posicion]['texto'] = '->' + @texto_menu[@posicion]['texto']
+    @texto_menu[@posicion][0] = '->' + @texto_menu[@posicion][0]
 
   end # def
 
@@ -110,7 +110,7 @@ class Menu < Chingu::GameState
     separacion = 100
     @texto_menu.each do |i|
       # mostrar = @texto_menu[i]['texto'].to_s + @texto_menu[i]['cantidad'].to_s
-      @font.draw(i['texto'] + i['cantidad'], 100, separacion.to_i, 0)
+      @font.draw(i[0] + i[1], 100, separacion.to_i, 0)
       separacion += 100
     end # each
   end # def
