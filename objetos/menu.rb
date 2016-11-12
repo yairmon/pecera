@@ -18,8 +18,11 @@ class Menu < Chingu::GameState
   def setup
     @texto_menu = [["-> Peces: ", "5"],
                   [" Tiburones: ", "0"],
-                  [" Reproduccion cada (seg): ", "0"],
-                  [" Peces viven (seg): ", "10"]]
+                  [" Peces se reproducen máximo (veces): ", "5"],
+                  [" Peces viven (seg): ", "20"],
+                  [" Tiburones hambrientos (seg): ", "0"],
+                  [" Taza de comida (seg): ", "0"],
+                  [" Peces se reproducen cada (seg): ", "1"]]
 
     # En caso de que se devuelva al menu, tener los valores previos configurados
     if $configuracion != nil
@@ -31,7 +34,7 @@ class Menu < Chingu::GameState
     end # if
 
     @posicion = 0
-    @font = Font.new($window, default_font_name(), 50)
+    @font = Font.new($window, default_font_name(), 40)
     $window.caption = "Pecera - Proyecto Vida Artificial"
   end  #def
 
@@ -45,21 +48,17 @@ class Menu < Chingu::GameState
       if @posicion > @texto_menu.size - 1
         @posicion = 0
       end # if
-      print "Se ha presionado la tecla: Abajo\n"
     elsif id == Button::KbUp
       @posicion -= 1
       if @posicion < 0
         @posicion = @texto_menu.size - 1
       end # if
-      print "Se ha presionado la tecla: Arriba\n"
     elsif id == Button::KbRight
       @texto_menu[@posicion][1] = (@texto_menu[@posicion][1].to_i + 1).to_s
-      print "Se ha presionado la tecla: Derecha\n"
     elsif id == Button::KbLeft
       if @texto_menu[@posicion][1] != "0"
         @texto_menu[@posicion][1] = (@texto_menu[@posicion][1].to_i - 1).to_s
       end # if
-      print "Se ha presionado la tecla: Izquierda\n"
     elsif id == Button::Kb0; agregar_numero("0")
     elsif id == Button::Kb1; agregar_numero("1")
     elsif id == Button::Kb2; agregar_numero("2")
@@ -77,7 +76,7 @@ class Menu < Chingu::GameState
         @texto_menu[@posicion][1] = "0"
       end # if
     elsif id == 40 # Tecla Enter (No se reconoce el comando Button::KbEnter)
-      print "Se ha presionado la tecla: Enter\n"
+      switch_game_state(Motor)
     # else
     #   print "Se ha presionado la tecla: " + id.to_s + "\n"
 
@@ -113,7 +112,7 @@ class Menu < Chingu::GameState
     @texto_menu.each do |i|
       # mostrar = @texto_menu[i]['texto'].to_s + @texto_menu[i]['cantidad'].to_s
       @font.draw(i[0] + i[1], 100, separacion.to_i, 0)
-      separacion += 100
+      separacion += 70
     end # each
   end # def
 

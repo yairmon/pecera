@@ -16,32 +16,17 @@ class Direccion
   def initialize(tamx = 800, tamy = 800, movimientos = 5, imagenx = 100, imageny = 65)
     @maxx = tamx
     @maxy = tamy
-    @posx = rand(@maxx)
-    @posy = rand(@maxy)
     @dir = rand(16)
     @contador = 0
     @velocidad = 0.5
     @movimientos = movimientos
     @desbordamientox = imagenx / 2
     @desbordamientoy = imageny / 2
+    @posx = @desbordamientox + rand(@maxx - @desbordamientox * 2)
+    @posy = @desbordamientoy + rand(@maxy - @desbordamientoy * 2)
     #print "Se ha seleccionado la direccion en: " + @dir.to_s + "\n"
   end #def
 
-  #
-  # obtener x:
-  # Devuelve el valor de x
-  #
-  def get_x
-    return @posx
-  end #def
-
-  #
-  # obtener y:
-  # Devuelve el valor de y
-  #
-  def get_y
-    return @posy
-  end #def
 
   #
   # mover:
@@ -106,5 +91,16 @@ class Direccion
     #  @dir = nuevo
     #end #ifelse
   end #def
+
+
+
+  # _______________________________
+  #        GETTERS & SETTERS
+  # _______________________________
+  def get_x; @posx; end
+  def set_x(x) @posx = x; end
+  def get_y; @posy; end
+  def set_y(y) @posy = y; end
+
 
 end #class

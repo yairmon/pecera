@@ -30,8 +30,14 @@ class Pez < Chingu::GameObject
     @vida = 5
     @vida_inicio = Time.now
     @vida_desviacion = rand(5)
+    @reproducir = 2
+    @reproducir_veces1 = 0 # veces que se ha reproducido
+    @reproducir_veces2 = 5 # maximo de veces que puede reproducirse
+    @reproducir_puede = false
+    @reproducir_inicio = Time.now
+    @reproducir_desviacion = rand(5)
 
-  end #def
+  end # def
 
   #
   # Mover:
@@ -42,34 +48,30 @@ class Pez < Chingu::GameObject
     @x = @direccion.get_x
     @y = @direccion.get_y
     #print "cords (" + @direccion.get_x.to_s + "," + @direccion.get_y.to_s + ")\n"
-  end #def
+  end # def
 
   #
   # Definir Parametros:
   # Configura todas las opciones del pez
   # int genero: Es el genero que tendra el pez (1 = hembra, 2 = macho)
   # int vida_tiempo: Es el número de segundos que vive
+  # int reproducir_veces: Es el numero máximo de veces que se puede reproducir
   #
-  def definir_parametros(genero, vida_tiempo)
+  def definir_parametros(genero, vida_tiempo, reproducir_veces)
     @genero = genero
     @vida = vida_tiempo
+    @reproducir_veces2 = reproducir_veces
   end #def
 
   #
-  # Definir_Genero:
-  # Configura el genero del pez
+  # Definir Posicion:
+  # La ubicacion del pez queda en la especificada
   #
-  def definir_genero(genero)
-    @genero = genero
-  end #def
-
-  #
-  # Get_Nombre:
-  # Devuelve el nombre aleatorio del pez
-  #
-  def get_nombre
-    return @nombre
-  end #def
+  def definir_parametros2(x, y, genero, vida_tiempo, reproducir_veces)
+    definir_parametros(genero, vida_tiempo, reproducir_veces)
+    @direccion.set_x(x)
+    @direccion.set_y(y)
+  end # def
 
   #
   # Override
@@ -86,11 +88,18 @@ class Pez < Chingu::GameObject
 
     # El pez muere luego de que pasa el tiempo de vida + desviacion
     if (Time.now - @vida_inicio) > @vida + @vida_desviacion
-      print "Muere el pez '#{@nombre}', vivió #{Time.now - @vida_inicio} segundos...\n"
+      print "Muere el pez '#{@nombre}', vivió #{(Time.now - @vida_inicio).to_i} segundos...\n"
       self.destroy
     end # if
 
-  end #def
+    # El pez puede reproducirse si se ha reproducido menos de las veces que puede
+    if @reproducir_veces1 < @reproducir_veces2
+      # El pez puede reproducirse cuando sobrepasa el tiempo definido + desviacion
+      if (Time.now - @reproducir_inicio) > @reproducir + @reproducir_desviacion
+        @reproducir_puede = true
+      end # if
+    end # if
+  end # def
 
   #
   # Colision_Pez
@@ -104,7 +113,31 @@ class Pez < Chingu::GameObject
       print rand(10).to_s + " Colision..." + @nombre + "\n"
 
     end # if
-  end #def
+  end # def
+
+  #
+  # Puede Reproducir:
+  # Devuelve verdadero en caso de que el pez pueda reproducirse
+  #
+  def puede_reproducir?
+    @reproducir_puede
+  end # def
+  def reproducirse
+    @reproducir_puede = false
+    @reproducir_inicio = Time.now
+    @reproducir_veces1 += 1
+  end # def
+
+
+
+  # _______________________________
+  #        GETTERS & SETTERS
+  # _______________________________
+  def get_nombre; @nombre; end
+  def get_genero; @genero; end
+  def get_x; @x; end
+  def get_y; @y; end
+
 
 
 end #class

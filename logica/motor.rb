@@ -22,16 +22,18 @@ class Motor < Chingu::GameState
   def setup
     if $configuracion != nil
       peces = $configuracion[0][1].to_i
+      reproducir_veces = $configuracion[2][1].to_i
       vida_tiempo = $configuracion[3][1].to_i
     else
-      print "No hay configuracion establecida aun...\n"
+      # print "No hay configuracion establecida aun...\n"
       peces = 5
+      reproducir_veces = 5
       vida_tiempo = 5
     end # if
-    (peces/2).times { Pez.create.definir_parametros(1, vida_tiempo) }
-    (peces/2).times { Pez.create.definir_parametros(2, vida_tiempo) }
+    (peces/2).times { Pez.create.definir_parametros(1, vida_tiempo, reproducir_veces) }
+    (peces/2).times { Pez.create.definir_parametros(2, vida_tiempo, reproducir_veces) }
     # Cuando es un numero impar de peces, se genera un pez con genero al azar
-    Pez.create.definir_parametros(rand(2)+1, vida_tiempo) if peces % 2 != 0
+    Pez.create.definir_parametros(rand(2)+1, vida_tiempo, reproducir_veces) if peces % 2 != 0
   end # def
 
   #
@@ -42,7 +44,14 @@ class Motor < Chingu::GameState
     super
 
     Pez.each_collision(Pez) do |pez1, pez2|
-      pez1.colision_pez(pez2)
+      # print rand(10).to_s + "Colision: pez1.rep=#{pez1.puede_reproducir?}, pez2.rep=#{pez1.puede_reproducir?}\n"
+      if pez1.puede_reproducir? && pez2.puede_reproducir? && pez1.get_genero != pez2.get_genero
+        pez1.reproducirse
+        pez2.reproducirse
+        reproducir_veces = $configuracion[2][1].to_i
+        vida_tiempo = $configuracion[3][1].to_i
+        Pez.create.definir_parametros2(pez1.get_x, pez2.get_y, rand(2)+1, vida_tiempo, reproducir_veces)
+      end # if
     end # each
 
     $window.caption = "FPS: #{$window.fps} - Objetos: #{current_game_state.game_objects.size} - Peces: #{Pez.size}"
