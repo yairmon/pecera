@@ -21,8 +21,10 @@ class Pez < Chingu::GameObject
     super
     @mode = :additive
     #print "Se crea un pez\n"
-    @direccion = Direccion.new
-    @image = Image["pez2.png"]
+    @image = Image["pez3.png"]
+    @direccion = Direccion.new($window.width, $window.height, 10, @image.width, @image.height)
+    # print @image.width.to_s + ", " + @image.height.to_s + " -- "
+    # print $window.width.to_s + ", " + $window.height.to_s + "\n"
     @z = 1
     @nombre = rand.to_s
     @ultimo = self
@@ -113,6 +115,16 @@ class Pez < Chingu::GameObject
       print rand(10).to_s + " Colision..." + @nombre + "\n"
 
     end # if
+  end # def
+
+  #
+  # Comer:
+  # Cuando un pez come se hace mas grande, cambia la imagen
+  #
+  def comer
+    @image = Image["pez2.png"]
+    # Al comer, un pez tendrá x segundos mas de vida
+    @vida_inicio += 2
   end # def
 
   #

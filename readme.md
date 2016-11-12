@@ -11,8 +11,8 @@
 **Lista de tareas**
 - [x] Inizializar el GitHub
 - [x] Crear una interfaz gráfica básica
-- [ ] Crear entidad de Comida
-- [ ] Generar comida en la pecera aleatoriamente
+- [x] Crear entidad de Comida
+- [x] Generar comida en la pecera aleatoriamente
 - [x] Crear agente Pez
 - [ ] Crear agente Tiburon
 - [x] Crear géneros sexuales del Pez
@@ -27,7 +27,7 @@
 - [x] Configuración de número máximo de veces en que un mismo pez se debe reproducir mediante la interfaz
 - [x] Configuración de número máximo de segundos que duran los peces con vida mediante la interfaz
 - [ ] Configuración de número de segundos que espera el tiburón si no ha comido para incrementar su velocidad mediante la interfaz
-- [ ] Configuración de taza en que se genera comida en el ambiente mediante la interfaz
+- [x] Configuración de tasa en que se genera comida en el ambiente mediante la interfaz
 - [x] Configuración de número de segundos que espera un pez antes de reproducirse mediante la interfaz (Con desviación de 5 segundos)
 - [x] Siempre se generan 50% machos y 50% hembra
 - [x] Solo se puede reproducir un macho con una hembra

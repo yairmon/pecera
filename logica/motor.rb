@@ -6,6 +6,7 @@ include Gosu
 include Chingu
 
 require_relative "../objetos/pez"
+require_relative "../objetos/comida"
 
 #
 # Motor:
@@ -20,18 +21,22 @@ class Motor < Chingu::GameState
   # Empezando con 6 peces
   #
   def setup
+    @comida_inicio = Time.now
     if $configuracion != nil
       peces = $configuracion[0][1].to_i
       reproducir_veces = $configuracion[2][1].to_i
       vida_tiempo = $configuracion[3][1].to_i
+      @comida_tasa = $configuracion[5][1].to_i
     else
       # print "No hay configuracion establecida aun...\n"
       peces = 5
       reproducir_veces = 5
       vida_tiempo = 5
+      @comida_tasa = 1
     end # if
     (peces/2).times { Pez.create.definir_parametros(1, vida_tiempo, reproducir_veces) }
     (peces/2).times { Pez.create.definir_parametros(2, vida_tiempo, reproducir_veces) }
+    # 10.times { Comida.create }
     # Cuando es un numero impar de peces, se genera un pez con genero al azar
     Pez.create.definir_parametros(rand(2)+1, vida_tiempo, reproducir_veces) if peces % 2 != 0
   end # def
@@ -43,6 +48,19 @@ class Motor < Chingu::GameState
   def update
     super
 
+    # Cuando un pez encuentra comida
+    Pez.each_collision(Comida) do |pez, comida|
+      pez.comer
+      comida.destroy
+    end # each
+
+    # Cuando ha pasado el tiempo necesario, se genera comida
+    if (Time.now - @comida_inicio) > @comida_tasa
+      Comida.create
+      @comida_inicio = Time.now
+    end # if
+
+    # Cuando un pez encuentra otro pez
     Pez.each_collision(Pez) do |pez1, pez2|
       # print rand(10).to_s + "Colision: pez1.rep=#{pez1.puede_reproducir?}, pez2.rep=#{pez1.puede_reproducir?}\n"
       if pez1.puede_reproducir? && pez2.puede_reproducir? && pez1.get_genero != pez2.get_genero
@@ -64,6 +82,9 @@ class Motor < Chingu::GameState
   def finalize
       Pez.each do |pez|
         pez.destroy
+      end
+      Comida.each do |comida|
+        comida.destroy
       end
   end # def
 

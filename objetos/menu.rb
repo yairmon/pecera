@@ -21,7 +21,7 @@ class Menu < Chingu::GameState
                   [" Peces se reproducen máximo (veces): ", "5"],
                   [" Peces viven (seg): ", "20"],
                   [" Tiburones hambrientos (seg): ", "0"],
-                  [" Taza de comida (seg): ", "0"],
+                  [" Tasa de comida (seg): ", "0"],
                   [" Peces se reproducen cada (seg): ", "1"]]
 
     # En caso de que se devuelva al menu, tener los valores previos configurados
