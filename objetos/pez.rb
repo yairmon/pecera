@@ -23,6 +23,7 @@ class Pez < Chingu::GameObject
     #print "Se crea un pez\n"
     @image = Image["pez3.png"]
     @direccion = Direccion.new($window.width, $window.height, 10, @image.width, @image.height)
+    @pez_vivo = true
     # print @image.width.to_s + ", " + @image.height.to_s + " -- "
     # print $window.width.to_s + ", " + $window.height.to_s + "\n"
     @z = 1
@@ -81,6 +82,9 @@ class Pez < Chingu::GameObject
   # Con color blanco (WHITE) queda la imagen original
   #
   def update
+    # Si el pez no esta vivo, no hacer nada en este metodo
+    if !@pez_vivo; return; end
+
     self.mover
     if @genero == 1
       @color = Color::FUCHSIA
@@ -91,7 +95,8 @@ class Pez < Chingu::GameObject
     # El pez muere luego de que pasa el tiempo de vida + desviacion
     if (Time.now - @vida_inicio) > @vida + @vida_desviacion
       print "Muere el pez '#{@nombre}', vivió #{(Time.now - @vida_inicio).to_i} segundos...\n"
-      self.destroy
+      @pez_vivo = false
+      # self.destroy
     end # if
 
     # El pez puede reproducirse si se ha reproducido menos de las veces que puede
@@ -132,7 +137,7 @@ class Pez < Chingu::GameObject
   # Devuelve verdadero en caso de que el pez pueda reproducirse
   #
   def puede_reproducir?
-    @reproducir_puede
+    @reproducir_puede && @pez_vivo
   end # def
   def reproducirse
     @reproducir_puede = false
