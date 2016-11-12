@@ -18,7 +18,9 @@ class Direccion
     @maxy = tamy
     @dir = rand(16)
     @contador = 0
-    @velocidad = 0.5
+    @velocidad_inicial = 0.5
+    @velocidad = @velocidad_inicial
+    @velocidad_alta = 2.5
     @movimientos = movimientos
     @desbordamientox = imagenx / 2
     @desbordamientoy = imageny / 2
@@ -49,14 +51,14 @@ class Direccion
     when 5; @posx += @velocidad; @posy -= @velocidad
     when 6; @posx += @velocidad; @posy += @velocidad
     when 7; @posx -= @velocidad; @posy += @velocidad
-    when 8; @posx -= @velocidad * 2; @posy -= @velocidad
-    when 9; @posx -= @velocidad; @posy -= @velocidad * 2
-    when 10; @posx += @velocidad * 2; @posy -= @velocidad
-    when 11; @posx += @velocidad; @posy -= @velocidad * 2
-    when 12; @posx += @velocidad; @posy += @velocidad * 2
-    when 13; @posx += @velocidad * 2; @posy += @velocidad
-    when 14; @posx -= @velocidad; @posy += @velocidad * 2
-    when 15; @posx -= @velocidad * 2; @posy += @velocidad
+    when 8; @posx -= @velocidad * 1.2; @posy -= @velocidad
+    when 9; @posx -= @velocidad; @posy -= @velocidad * 1.2
+    when 10; @posx += @velocidad * 1.2; @posy -= @velocidad
+    when 11; @posx += @velocidad; @posy -= @velocidad * 1.2
+    when 12; @posx += @velocidad; @posy += @velocidad * 1.2
+    when 13; @posx += @velocidad * 1.2; @posy += @velocidad
+    when 14; @posx -= @velocidad; @posy += @velocidad * 1.2
+    when 15; @posx -= @velocidad * 1.2; @posy += @velocidad
     end #case
     @contador += 1
   end #def
@@ -72,14 +74,14 @@ class Direccion
   # 5 - diagonal der-arriba
   # 6 - diagonal abajo-der
   # 7 - diagonal abajo-izq
-  # 8 - diagonal izq*2-arriba
-  # 9 - diagonal izq-arriba*2
-  # 10 - diagonal der*2-arriba
-  # 11 - diagonal der-arriba*2
-  # 12 - diagonal abajo*2-der
-  # 13 - diagonal abajo-der*2
-  # 14 - diagonal abajo*2-izq
-  # 15 - diagonal abajo-izq*2
+  # 8 - diagonal izq+2-arriba
+  # 9 - diagonal izq-arriba+2
+  # 10 - diagonal der+2-arriba
+  # 11 - diagonal der-arriba+2
+  # 12 - diagonal abajo+2-der
+  # 13 - diagonal abajo-der+2
+  # 14 - diagonal abajo+2-izq
+  # 15 - diagonal abajo-izq+2
   #
   def cambiar_direccion
     @dir = rand(16)
@@ -92,6 +94,21 @@ class Direccion
     #end #ifelse
   end #def
 
+  #
+  # Aumentar Velocidad:
+  # Es para multiplicar la velocidad de movimiento dos veces
+  #
+  def aumentar_velocidad
+    @velocidad = @velocidad_alta
+  end # def
+
+  #
+  # Disminuir Velocidad:
+  # Es para dividir la velocidad de movimiento dos veces
+  #
+  def disminuir_velocidad
+    @velocidad = @velocidad_inicial
+  end # def
 
 
   # _______________________________

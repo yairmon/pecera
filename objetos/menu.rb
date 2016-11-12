@@ -17,10 +17,10 @@ class Menu < Chingu::GameState
   #
   def setup
     @texto_menu = [["-> Peces: ", "5"],
-                  [" Tiburones: ", "0"],
+                  [" Tiburones: ", "1"],
                   [" Peces se reproducen máximo (veces): ", "5"],
                   [" Peces viven (seg): ", "20"],
-                  [" Tiburones hambrientos (seg): ", "0"],
+                  [" Tiburones hambrientos (seg): ", "5"],
                   [" Tasa de comida (seg): ", "2"],
                   [" Peces se reproducen cada (seg): ", "1"]]
 

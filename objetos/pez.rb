@@ -9,6 +9,7 @@ require_relative "../logica/direccion"
 #
 # Pez:
 # Es el objeto que se mueve dentro de la ventana libre y aleatoriamente
+# En busca de comida y pareja
 #
 
 class Pez < Chingu::GameObject
@@ -87,7 +88,7 @@ class Pez < Chingu::GameObject
 
     self.mover
     if @genero == 1
-      @color = Color::FUCHSIA
+      @color = Color::BLACK
     else
       @color = Color::GREEN
     end # if
@@ -137,7 +138,7 @@ class Pez < Chingu::GameObject
   # Devuelve verdadero en caso de que el pez pueda reproducirse
   #
   def puede_reproducir?
-    @reproducir_puede && @pez_vivo
+    return (@reproducir_puede && @pez_vivo)
   end # def
   def reproducirse
     @reproducir_puede = false
