@@ -22,8 +22,8 @@ class Motor < Chingu::GameState
   # Empezando con 6 peces
   #
   def setup
-    @parallax = Chingu::Parallax.create(:x => 150, :y => 150, :z => -1, :rotation_center => :top_left)
-    @parallax << { :image => "wood.png", :repeat_x => true, :repeat_y => true}
+    # @parallax = Chingu::Parallax.create(:x => 150, :y => 150, :z => -1, :rotation_center => :top_left)
+    # @parallax << { :image => "wood.png", :repeat_x => true, :repeat_y => true}
     @comida_inicio = Time.now
     if $configuracion != nil
       peces = $configuracion[0][1].to_i
