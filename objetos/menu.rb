@@ -16,23 +16,21 @@ class Menu < Chingu::GameState
   # Se activa cuando se selecciona el GameState
   #
   def setup
-    # self.input = { :pad_button_1 => :tecla }
-    @spinner = ["|", "/", "-", "\\", "|", "/", "-", "\\"]
-    @spinner_index = 0.0
-    @posicion = 0
-    @texto_menu = [["-> Peces: ", "0"],
+    @texto_menu = [["-> Peces: ", "5"],
                   ["Tiburones: ", "0"],
                   ["Reproduccion cada (seg): ", "0"]]
 
-    @texto0 = "-> Peces: "
-    @texto1 = "Tiburones: "
-    @texto2 = "Reproduccion cada: "
-    @cantidad0 = "0"
-    @cantidad1 = "0"
-    @cantidad2 = "0"
+    # En caso de que se devuelva al menu, tener los valores previos configurados
+    if $configuracion != nil
+      (0...@texto_menu.size).each do |i|
+        @texto_menu[i][1] = $configuracion[i][1]
+      end # each
+    else
+      $configuracion = 0
+    end # if
 
+    @posicion = 0
     @font = Font.new($window, default_font_name(), 50)
-
     $window.caption = "Pecera - Proyecto Vida Artificial"
   end  #def
 
@@ -99,8 +97,11 @@ class Menu < Chingu::GameState
     end # each
     @texto_menu[@posicion][0] = '->' + @texto_menu[@posicion][0]
 
+    $configuracion = @texto_menu
   end # def
-
+  def posicion
+    "Esta es una posicion al azar"
+  end
   #
   #  Override:
   #  Esta funcion dibuja en el plano

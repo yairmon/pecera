@@ -19,7 +19,12 @@ class Motor < Chingu::GameState
   # Inicializar los objetos en la pecera
   # Empezando con 6 peces
   #
-  def setup(peces = 5)
+  def setup
+    if $configuracion != nil
+      peces = $configuracion[0][1].to_i
+    else
+      peces = 5
+    end # if
     (peces/2).times { Pez.create.definir_genero(1) }
     (peces/2).times { Pez.create.definir_genero(2) }
     # Cuando es un numero impar de peces, se genera un pez con genero al azar

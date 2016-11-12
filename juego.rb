@@ -22,19 +22,11 @@ class Juego < Chingu::Window
   def initialize
     super(800,800)
     self.caption = "Proyecto Vida Artificial" # Titulo de la ventana
-    self.input = {:esc => :exit, :q => method(:cambiar_estado)} # Al presionar esc, se cierra la ventana
+    self.input = {:esc => :exit, [:q, :enter, :space] => method(:cambiar_estado)} # Al presionar esc, se cierra la ventana
 
     push_game_state(Fondo)
-    push_game_state(Menu)
     push_game_state(Motor)
-    # Pez.create
-    # Pez.create
-    # Pez.create
-    # Pez.create
-    # Pez.create
-    # Pez.create
-    # Pez.create
-    # Pez.create
+    push_game_state(Menu)
   end #def
 
   #

@@ -80,7 +80,7 @@ class Pez < Chingu::GameObject
   def colision_pez(pez)
     if @ultimo != pez.get_nombre
       @ultimo = pez.get_nombre
-      @color = Color::RED
+      @color = Color::BLUE
       print rand(10).to_s + " Colision..." + @nombre + "\n"
 
     end # if
