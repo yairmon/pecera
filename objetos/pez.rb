@@ -27,6 +27,9 @@ class Pez < Chingu::GameObject
     @nombre = rand.to_s
     @ultimo = self
     @genero = 1
+    @vida = 5
+    @vida_inicio = Time.now
+    @vida_desviacion = rand(5.0)
 
   end #def
 
@@ -69,7 +72,13 @@ class Pez < Chingu::GameObject
     else
       @color = Color::GREEN
     end # if
-    #sleep(1)
+
+    # El pez muere luego de que pasa el tiempo de vida + desviacion
+    if (Time.now - @vida_inicio) + @vida_desviacion > @vida
+      print "Muere el pez '#{@nombre}' \n"
+      self.destroy
+    end # if
+
   end #def
 
   #
