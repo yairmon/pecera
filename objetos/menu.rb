@@ -17,8 +17,9 @@ class Menu < Chingu::GameState
   #
   def setup
     @texto_menu = [["-> Peces: ", "5"],
-                  ["Tiburones: ", "0"],
-                  ["Reproduccion cada (seg): ", "0"]]
+                  [" Tiburones: ", "0"],
+                  [" Reproduccion cada (seg): ", "0"],
+                  [" Peces viven (seg): ", "10"]]
 
     # En caso de que se devuelva al menu, tener los valores previos configurados
     if $configuracion != nil
@@ -26,7 +27,7 @@ class Menu < Chingu::GameState
         @texto_menu[i][1] = $configuracion[i][1]
       end # each
     else
-      $configuracion = 0
+      $configuracion = @texto_menu
     end # if
 
     @posicion = 0
@@ -41,14 +42,14 @@ class Menu < Chingu::GameState
   def button_down(id)
     if id == Button::KbDown
       @posicion += 1
-      if @posicion > 2
+      if @posicion > @texto_menu.size - 1
         @posicion = 0
       end # if
       print "Se ha presionado la tecla: Abajo\n"
     elsif id == Button::KbUp
       @posicion -= 1
       if @posicion < 0
-        @posicion = 2
+        @posicion = @texto_menu.size - 1
       end # if
       print "Se ha presionado la tecla: Arriba\n"
     elsif id == Button::KbRight

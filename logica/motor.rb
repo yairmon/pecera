@@ -22,13 +22,16 @@ class Motor < Chingu::GameState
   def setup
     if $configuracion != nil
       peces = $configuracion[0][1].to_i
+      vida_tiempo = $configuracion[3][1].to_i
     else
+      print "No hay configuracion establecida aun...\n"
       peces = 5
+      vida_tiempo = 5
     end # if
-    (peces/2).times { Pez.create.definir_genero(1) }
-    (peces/2).times { Pez.create.definir_genero(2) }
+    (peces/2).times { Pez.create.definir_parametros(1, vida_tiempo) }
+    (peces/2).times { Pez.create.definir_parametros(2, vida_tiempo) }
     # Cuando es un numero impar de peces, se genera un pez con genero al azar
-    Pez.create.definir_genero(rand(2)+1) if peces % 2 != 0
+    Pez.create.definir_parametros(rand(2)+1, vida_tiempo) if peces % 2 != 0
   end # def
 
   #

@@ -29,7 +29,7 @@ class Pez < Chingu::GameObject
     @genero = 1
     @vida = 5
     @vida_inicio = Time.now
-    @vida_desviacion = rand(5.0)
+    @vida_desviacion = rand(5)
 
   end #def
 
@@ -42,6 +42,17 @@ class Pez < Chingu::GameObject
     @x = @direccion.get_x
     @y = @direccion.get_y
     #print "cords (" + @direccion.get_x.to_s + "," + @direccion.get_y.to_s + ")\n"
+  end #def
+
+  #
+  # Definir Parametros:
+  # Configura todas las opciones del pez
+  # int genero: Es el genero que tendra el pez (1 = hembra, 2 = macho)
+  # int vida_tiempo: Es el número de segundos que vive
+  #
+  def definir_parametros(genero, vida_tiempo)
+    @genero = genero
+    @vida = vida_tiempo
   end #def
 
   #
@@ -74,8 +85,8 @@ class Pez < Chingu::GameObject
     end # if
 
     # El pez muere luego de que pasa el tiempo de vida + desviacion
-    if (Time.now - @vida_inicio) + @vida_desviacion > @vida
-      print "Muere el pez '#{@nombre}' \n"
+    if (Time.now - @vida_inicio) > @vida + @vida_desviacion
+      print "Muere el pez '#{@nombre}', vivió #{Time.now - @vida_inicio} segundos...\n"
       self.destroy
     end # if
 

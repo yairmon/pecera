@@ -22,10 +22,10 @@
 - [ ] El agente Pez muere después de N segundos (Con desviación de 5 segundos)
 - [ ] El agente Tiburon debe buscar los agentes Pez
 - [ ] El agente Tiburon aumenta su velocidad después de un tiempo sin comer
-- [ ] Configuración de número de peces mediante la interfaz
+- [x] Configuración de número de peces mediante la interfaz
 - [ ] Configuración de número de tiburones mediante la interfaz
 - [ ] Configuración de número máximo de veces en que un mismo pez se debe reproducir mediante la interfaz
-- [ ] Configuración de número máximo de segundos que duran los peces con vida mediante la interfaz
+- [x] Configuración de número máximo de segundos que duran los peces con vida mediante la interfaz
 - [ ] Configuración de número de segundos que espera el tiburón si no ha comido para incrementar su velocidad mediante la interfaz
 - [ ] Configuración de taza en que se genera comida en el ambiente mediante la interfaz
 - [ ] Configuración de número de segundos que espera un pez antes de reproducirse mediante la interfaz (Con desviación de 5 segundos)
