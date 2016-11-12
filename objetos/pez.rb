@@ -88,7 +88,7 @@ class Pez < Chingu::GameObject
 
     self.mover
     if @genero == 1
-      @color = Color::BLACK
+      @color = Color::FUCHSIA
     else
       @color = Color::GREEN
     end # if
