@@ -20,7 +20,7 @@ class Menu < Chingu::GameState
                   [" Tiburones: ", "1"],
                   [" Peces se reproducen máximo (veces): ", "5"],
                   [" Peces viven (seg): ", "20"],
-                  [" Tiburones hambrientos (seg): ", "5"],
+                  [" Tiburon hambriento (seg): ", "10"],
                   [" Tasa de comida (seg): ", "2"],
                   [" Peces se reproducen cada (seg): ", "1"]]
 
@@ -37,6 +37,15 @@ class Menu < Chingu::GameState
     @font = Font.new($window, default_font_name(), 40)
     $window.caption = "Pecera - Proyecto Vida Artificial"
   end  #def
+
+  #
+  # Agregar Numero:
+  # Esta funcion se usa para añadir un numero en la cadena
+  # str num: Es el numero que se agrega al final
+  #
+  def agregar_numero(num)
+    @texto_menu[@posicion][1] = ((@texto_menu[@posicion][1] + num).to_i).to_s
+  end # def
 
   #
   #  Override:
@@ -82,15 +91,6 @@ class Menu < Chingu::GameState
 
     end # if
 
-    #
-    # Agregar Numero:
-    # Esta funcion se usa para añadir un numero en la cadena
-    # str num: Es el numero que se agrega al final
-    #
-    def agregar_numero(num)
-      @texto_menu[@posicion][1] = ((@texto_menu[@posicion][1] + num).to_i).to_s
-    end # def
-
     # Dependiendo de la posicion colocar la guia
     (0...@texto_menu.size).each do |i|
       @texto_menu[i][0] = @texto_menu[i][0].delete '->'
@@ -121,7 +121,7 @@ class Menu < Chingu::GameState
   #  Esta funcion se ejecuta cuando se abandona el estado actual
   #
   def finalize
-    print "Se sale de menu...\n"
+    print "Se sale de menu...\n" if $modo_debug
   end # def
 
 end #class

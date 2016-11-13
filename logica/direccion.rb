@@ -76,6 +76,8 @@ class Direccion
   #
   # Buscar:
   # Selecciona una ruta para llegar a las coordenadas seleccionadas
+  # int x: posicion x a ir a buscar
+  # int y: posicion y a ir a buscar
   #
   def buscar(x, y)
     if @posx > x && @posy == y; @dir = 0
@@ -88,8 +90,29 @@ class Direccion
     elsif @posx > x && @posy < y; @dir = 7
     else; @dir = rand(16)
     end # if
-    
+
     self.cambiar_posicion
+  end # def
+
+  #
+  # Evitar:
+  # Dice si la ruta que lleva está en la ruta a evitar
+  # int x: posicion x a evitar
+  # int y: posicion y a evitar
+  #
+  def evitar?(x, y)
+    if @posx < x && @posy == y; salida = @dir==0||@dir==4||@dir==7||@dir==8||@dir==9||@dir==14||@dir==15
+    elsif @posx == x && @posy < y; salida = @dir==1||@dir==4||@dir==5||@dir==8||@dir==9||@dir==10||@dir==11
+    elsif @posx > x && @posy == y; salida = @dir==2||@dir==5||@dir==6||@dir==10||@dir==11||@dir==12||@dir==13
+    elsif @posx == x && @posy > y; salida = @dir==3||@dir==6||@dir==7||@dir==12||@dir==13||@dir==14||@dir==15
+    elsif @posx < x && @posy < y; salida = @dir==4||@dir==0||@dir==7||@dir==8||@dir==9||@dir==14||@dir==15||@dir==1||@dir==5||@dir==10||@dir==11
+    elsif @posx > x && @posy < y; salida = @dir==5||@dir==2||@dir==6||@dir==10||@dir==11||@dir==12||@dir==13||@dir==1||@dir==4||@dir==8||@dir==9
+    elsif @posx > x && @posy > y; salida = @dir==6||@dir==3||@dir==7||@dir==12||@dir==13||@dir==14||@dir==15||@dir==2||@dir==5||@dir==10||@dir==11
+    elsif @posx < x && @posy > y; salida = @dir==7||@dir==3||@dir==6||@dir==12||@dir==13||@dir==14||@dir==15||@dir==0||@dir==4||@dir==8||@dir==9
+    end # if
+
+    return !salida
+
   end # def
 
   #

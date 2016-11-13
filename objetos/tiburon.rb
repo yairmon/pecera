@@ -107,7 +107,7 @@ class Tiburon < Chingu::GameObject
     @buscarx = x
     @buscary = y
     @libre = false
-    # print "Queda ocupado el pez\n"
+    print "Tiburon en busca del pez\n" if $modo_debug
   end # def
 
   # _______________________________

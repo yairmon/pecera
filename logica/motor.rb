@@ -90,11 +90,11 @@ class Motor < Chingu::GameState
 
     # Los peces buscan particulas de comida y pareja al azar
     Pez.each do |pez|
-      contador = 0
       if pez.get_libre
         # 50 % de probabilidad de ir a buscar comida o buscar pareja
         pareja = rand(2)
 
+        contador = 0
         if pareja == 1
           # los peces macho son la segunda mitad, por lo tanto si el pez
           # ... es hembra debe buscar solo los peces de la segunda mitad
@@ -117,6 +117,16 @@ class Motor < Chingu::GameState
           end # each
         end #if
       end # if
+
+      # El pez tiende a evitar un tiburon al azar
+      contador = 0
+      elegido = rand(Tiburon.size)
+      Tiburon.each do |tiburon|
+        if contador == elegido
+          pez.evitar(tiburon.get_x, tiburon.get_y)
+        end # if
+        contador += 1
+      end # each
     end # each
 
     # Los tiburones buscan peces al azar

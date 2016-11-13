@@ -41,12 +41,17 @@ class Pez < Chingu::GameObject
     @reproducir_inicio = Time.now
     @reproducir_desviacion = rand(5)
     @libre = true # Es para saber si el pez se puede mover hacia otra comida
+    @perseguido = false # Es para saber si el pez debe evitar una coordenada
+    @evitarx = 0 # Coordenadas a evitar si es perseguido
+    @evitary = 0 # Coordenadas a evitar si es perseguido
 
   end # def
 
   #
   # Rango:
   # Devuelve verdadero si se encuentra en el rango de la imagen
+  # int x: posicion x a mirar en el rango
+  # int y: posicion y a mirar en el rango
   #
   def rango?(x, y)
     izq = @x - (@image.width / 2) + 5
@@ -64,7 +69,21 @@ class Pez < Chingu::GameObject
   def mover
     if !@libre && !self.rango?(@buscarx, @buscary)
       @direccion.buscar(@buscarx, @buscary)
+
+      # Si el pez esta siendo perseguido y va en una direccion que debe evitar
+      # ... entonces queda libre para buscar otra ruta
+      if @direccion.evitar?(@evitarx, @evitary)
+        @libre = true
+        print "Cambiar ruta por ser perseguido\n" if $modo_debug
+      end # if
+
     elsif @libre
+      # Si el pez esta siendo perseguido y va en una direccion que debe evitar
+      # ... entonces queda libre para buscar otra ruta
+      if @direccion.evitar?(@evitarx, @evitary)
+        @direccion.cambiar_direccion
+        print "Cambiar ruta por ser perseguido\n" if $modo_debug
+      end # if
       @direccion.mover
     else
       @libre = true
@@ -115,7 +134,7 @@ class Pez < Chingu::GameObject
 
     # El pez muere luego de que pasa el tiempo de vida + desviacion
     if (Time.now - @vida_inicio) > @vida + @vida_desviacion
-      print "Muere el pez '#{@nombre}', vivió #{(Time.now - @vida_inicio).to_i} segundos...\n"
+      print "Muere el pez '#{@nombre}', vivió #{(Time.now - @vida_inicio).to_i} segundos...\n" if $modo_debug
       @pez_vivo = false
       # self.destroy
     end # if
@@ -138,7 +157,7 @@ class Pez < Chingu::GameObject
     if @ultimo != pez.get_nombre
       @ultimo = pez.get_nombre
       @color = Color::BLUE
-      print rand(10).to_s + " Colision..." + @nombre + "\n"
+      print rand(10).to_s + " Colision..." + @nombre + "\n" if $modo_debug
 
     end # if
   end # def
@@ -152,7 +171,7 @@ class Pez < Chingu::GameObject
     # Al comer, un pez tendrá x segundos mas de vida, y queda libre para buscar mas comida
     @vida_inicio += 2
     @libre = true
-    # print "Queda libre el pez\n"
+    print "Queda libre el pez\n" if $modo_debug
   end # def
 
   #
@@ -165,7 +184,19 @@ class Pez < Chingu::GameObject
     @buscarx = x
     @buscary = y
     @libre = false
-    # print "Queda ocupado el pez\n"
+    print "Queda ocupado el pez\n" if $modo_debug
+  end # def
+
+  #
+  # Evitar:
+  #   Un pez debe evitar ser comida de tiburon
+  # int x: posicion x a ir a evitar
+  # int y: posicion y a ir a evitar
+  #
+  def evitar(x, y)
+    @evitarx = x
+    @evitary = y
+    print "Esta persiguiendo el pez\n" if $modo_debug
   end # def
 
   #
