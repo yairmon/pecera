@@ -16,11 +16,11 @@
 - [x] Crear agente Pez
 - [x] Crear agente Tiburon
 - [x] Crear géneros sexuales del Pez
-- [ ] El agente Pez debe buscar entidades Comida
+- [x] El agente Pez debe buscar entidades Comida
 - [ ] El agente Pez debe evitar los agentes Tiburon
-- [ ] El agente Pez debe buscar agente Pez (Pareja)
+- [x] El agente Pez debe buscar agente Pez (Pareja)
 - [x] El agente Pez muere después de N segundos (Con desviación de 5 segundos)
-- [ ] El agente Tiburon debe buscar los agentes Pez
+- [x] El agente Tiburon debe buscar los agentes Pez
 - [x] El agente Tiburon aumenta su velocidad después de un tiempo sin comer
 - [x] Configuración de número de peces mediante la interfaz
 - [x] Configuración de número de tiburones mediante la interfaz

@@ -119,6 +119,20 @@ class Motor < Chingu::GameState
       end # if
     end # each
 
+    # Los tiburones buscan peces al azar
+    Tiburon.each do |tiburon|
+      contador = 0
+      if tiburon.get_libre
+        elegido = rand(Pez.size)
+        Pez.each do |pez|
+          if contador == elegido
+            tiburon.buscar(pez.get_x, pez.get_y)
+          end # if
+          contador += 1
+        end # each
+      end #if
+    end # each
+
     $window.caption = "FPS: #{$window.fps} - Objetos: #{current_game_state.game_objects.size} - Peces: #{Pez.size} - Tiburones: #{Tiburon.size}"
   end # def
 
