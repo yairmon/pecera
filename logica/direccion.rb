@@ -42,6 +42,17 @@ class Direccion
       @contador = 0
       #print "Se ha cambiado la direccion en: " + @dir.to_s + "\n"
     end #if
+
+    self.cambiar_posicion
+
+    @contador += 1
+  end #def
+
+  #
+  # Cambiar Posicion
+  # Dependiendo de la direccion suma o resta las variables X y Y
+  #
+  def cambiar_posicion
     case @dir
     when 0; @posx -= @velocidad
     when 1; @posy -= @velocidad
@@ -60,11 +71,29 @@ class Direccion
     when 14; @posx -= @velocidad; @posy += @velocidad * 1.2
     when 15; @posx -= @velocidad * 1.2; @posy += @velocidad
     end #case
-    @contador += 1
-  end #def
+  end # def
 
   #
-  # CambiarDireccion
+  # Buscar:
+  # Selecciona una ruta para llegar a las coordenadas seleccionadas
+  #
+  def buscar(x, y)
+    if @posx > x && @posy == y; @dir = 0
+    elsif @posx == x && @posy > y; @dir = 1
+    elsif @posx < x && @posy == y; @dir = 2
+    elsif @posx == x && @posy < y; @dir = 3
+    elsif @posx > x && @posy > y; @dir = 4
+    elsif @posx < x && @posy > y; @dir = 5
+    elsif @posx < x && @posy < y; @dir = 6
+    elsif @posx > x && @posy < y; @dir = 7
+    else; @dir = rand(16)
+    end # if
+    
+    self.cambiar_posicion
+  end # def
+
+  #
+  # Cambiar Direccion
   # Selecciona aleatoriamente entre las siguientes rutas
   # 0 - izq
   # 1 - arriba
@@ -74,14 +103,14 @@ class Direccion
   # 5 - diagonal der-arriba
   # 6 - diagonal abajo-der
   # 7 - diagonal abajo-izq
-  # 8 - diagonal izq+2-arriba
-  # 9 - diagonal izq-arriba+2
-  # 10 - diagonal der+2-arriba
-  # 11 - diagonal der-arriba+2
-  # 12 - diagonal abajo+2-der
-  # 13 - diagonal abajo-der+2
-  # 14 - diagonal abajo+2-izq
-  # 15 - diagonal abajo-izq+2
+  # 8 - diagonal izq*1.2-arriba
+  # 9 - diagonal izq-arriba*1.2
+  # 10 - diagonal der*1.2-arriba
+  # 11 - diagonal der-arriba*1.2
+  # 12 - diagonal abajo*1.2-der
+  # 13 - diagonal abajo-der*1.2
+  # 14 - diagonal abajo*1.2-izq
+  # 15 - diagonal abajo-izq*1.2
   #
   def cambiar_direccion
     @dir = rand(16)

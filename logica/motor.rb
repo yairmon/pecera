@@ -88,6 +88,37 @@ class Motor < Chingu::GameState
       pez.destroy
     end # each
 
+    # Los peces buscan particulas de comida y pareja al azar
+    Pez.each do |pez|
+      contador = 0
+      if pez.get_libre
+        # 50 % de probabilidad de ir a buscar comida o buscar pareja
+        pareja = rand(2)
+
+        if pareja == 1
+          # los peces macho son la segunda mitad, por lo tanto si el pez
+          # ... es hembra debe buscar solo los peces de la segunda mitad
+          tam_pez = Pez.size / 2
+          sumar = pez.get_genero == 1 ? tam_pez : 0
+          elegido = rand(tam_pez) + sumar
+          Pez.each do |pez2|
+            if contador == elegido
+              pez.buscar(pez2.get_x, pez2.get_y)
+            end # if
+            contador += 1
+          end # each
+        else
+          elegido = rand(Comida.size)
+          Comida.each do |comida|
+            if contador == elegido
+              pez.buscar(comida.get_x, comida.get_y)
+            end # if
+            contador += 1
+          end # each
+        end #if
+      end # if
+    end # each
+
     $window.caption = "FPS: #{$window.fps} - Objetos: #{current_game_state.game_objects.size} - Peces: #{Pez.size} - Tiburones: #{Tiburon.size}"
   end # def
 
@@ -96,15 +127,9 @@ class Motor < Chingu::GameState
   #  Esta funcion se ejecuta cuando se abandona el estado actual
   #
   def finalize
-      Pez.each do |pez|
-        pez.destroy
-      end
-      Comida.each do |comida|
-        comida.destroy
-      end
-      Tiburon.each do |tiburon|
-        tiburon.destroy
-      end
+      Pez.destroy_all
+      Comida.destroy_all
+      Tiburon.destroy_all
   end # def
 
 end # class

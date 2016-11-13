@@ -40,7 +40,21 @@ class Pez < Chingu::GameObject
     @reproducir_puede = false
     @reproducir_inicio = Time.now
     @reproducir_desviacion = rand(5)
+    @libre = true # Es para saber si el pez se puede mover hacia otra comida
 
+  end # def
+
+  #
+  # Rango:
+  # Devuelve verdadero si se encuentra en el rango de la imagen
+  #
+  def rango?(x, y)
+    izq = @x - (@image.width / 2) + 5
+    der = @x + (@image.width / 2) - 5
+    arriba = @y - (@image.height / 2) + 5
+    abajo = @y + (@image.height / 2) - 5
+
+    return x > izq && x < der && y > arriba && y < abajo
   end # def
 
   #
@@ -48,7 +62,13 @@ class Pez < Chingu::GameObject
   # Traza una ruta al azar en la ventana
   #
   def mover
-    @direccion.mover
+    if !@libre && !self.rango?(@buscarx, @buscary)
+      @direccion.buscar(@buscarx, @buscary)
+    elsif @libre
+      @direccion.mover
+    else
+      @libre = true
+    end # if
     @x = @direccion.get_x
     @y = @direccion.get_y
     #print "cords (" + @direccion.get_x.to_s + "," + @direccion.get_y.to_s + ")\n"
@@ -56,7 +76,7 @@ class Pez < Chingu::GameObject
 
   #
   # Definir Parametros:
-  # Configura todas las opciones del pez
+  #   Configura todas las opciones del pez
   # int genero: Es el genero que tendra el pez (1 = hembra, 2 = macho)
   # int vida_tiempo: Es el número de segundos que vive
   # int reproducir_veces: Es el numero máximo de veces que se puede reproducir
@@ -111,8 +131,8 @@ class Pez < Chingu::GameObject
 
   #
   # Colision_Pez
-  # Se llama cuando el pez se encuentra con otro pez
-  # El pez sólo colisiona con un pez diferente cada vez
+  #   Se llama cuando el pez se encuentra con otro pez
+  #   El pez sólo colisiona con un pez diferente cada vez
   #
   def colision_pez(pez)
     if @ultimo != pez.get_nombre
@@ -125,12 +145,27 @@ class Pez < Chingu::GameObject
 
   #
   # Comer:
-  # Cuando un pez come se hace mas grande, cambia la imagen
+  #   Cuando un pez come se hace mas grande, cambia la imagen
   #
   def comer
     @image = Image["pez2.png"]
-    # Al comer, un pez tendrá x segundos mas de vida
+    # Al comer, un pez tendrá x segundos mas de vida, y queda libre para buscar mas comida
     @vida_inicio += 2
+    @libre = true
+    # print "Queda libre el pez\n"
+  end # def
+
+  #
+  # Buscar:
+  #   Un pez puede ir a buscar una comida
+  # int x: posicion x a ir a buscar
+  # int y: posicion y a ir a buscar
+  #
+  def buscar(x, y)
+    @buscarx = x
+    @buscary = y
+    @libre = false
+    # print "Queda ocupado el pez\n"
   end # def
 
   #
@@ -153,6 +188,7 @@ class Pez < Chingu::GameObject
   # _______________________________
   def get_nombre; @nombre; end
   def get_genero; @genero; end
+  def get_libre; @libre; end
   def get_x; @x; end
   def get_y; @y; end
 
