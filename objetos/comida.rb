@@ -31,7 +31,7 @@ class Comida < Chingu::GameObject
   # Con color blanco (WHITE) queda la imagen original
   #
   def update
-    @color = Color::WHITE
+    # @color = Color::WHITE
   end # def
 
   # _______________________________

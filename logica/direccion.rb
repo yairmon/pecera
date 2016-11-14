@@ -162,10 +162,25 @@ class Direccion
     @velocidad = @velocidad_inicial
   end # def
 
+  #
+  # Izquierda?:
+  # Dice la direccion es la izquierda (Esto para las animaciones)
+  #
+  def izquierda?
+    if @dir == 0 || @dir == 4 || @dir == 7 || @dir == 8 || @dir == 9 || @dir == 14 || @dir == 15
+      return true
+    # elsif @dir == 2 || @dir == 5 || @dir == 6 || @dir == 10 || @dir == 11 || @dir == 12 || @dir == 13
+    #   return false
+    else
+      return false
+    end # if
+  end # def
+
 
   # _______________________________
   #        GETTERS & SETTERS
   # _______________________________
+  def get_dir; @dir; end
   def get_x; @posx; end
   def set_x(x) @posx = x; end
   def get_y; @posy; end

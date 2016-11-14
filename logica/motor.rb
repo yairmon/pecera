@@ -16,14 +16,19 @@ require_relative "../objetos/tiburon"
 #
 
 class Motor < Chingu::GameState
+  traits :collision_detection, :bounding_circle
   #
   # Constructor:
   # Inicializar los objetos en la pecera
   # Empezando con 6 peces
   #
   def setup
-    # @parallax = Chingu::Parallax.create(:x => 150, :y => 150, :z => -1, :rotation_center => :top_left)
-    # @parallax << { :image => "wood.png", :repeat_x => true, :repeat_y => true}
+    @parallax = Chingu::Parallax.create(:x => 0, :y => 0, :z => -1, :rotation_center => :top_left)
+    @parallax << { :image => "fondo.bmp", :repeat_x => true, :repeat_y => true}
+    # @image = Image["fondo.png"]
+    # @x = 0
+    # @y = 0
+    # @z = 0
     @comida_inicio = Time.now
     if $configuracion != nil
       peces = $configuracion[0][1].to_i
@@ -32,6 +37,7 @@ class Motor < Chingu::GameState
       pez_vida_tiempo = $configuracion[3][1].to_i
       tiburon_vida_tiempo = $configuracion[4][1].to_i
       @comida_tasa = $configuracion[5][1].to_i
+      pez_reproducir_tiempo = $configuracion[6][1].to_i
     else
       # print "No hay configuracion establecida aun...\n"
       peces = 5
@@ -40,13 +46,14 @@ class Motor < Chingu::GameState
       pez_vida_tiempo = 5
       tiburon_vida_tiempo = 5
       @comida_tasa = 1
+      pez_reproducir_tiempo = 2
     end # if
-    (peces/2).times { Pez.create.definir_parametros(1, pez_vida_tiempo, reproducir_veces) }
-    (peces/2).times { Pez.create.definir_parametros(2, pez_vida_tiempo, reproducir_veces) }
+    (peces/2).times { Pez.create.definir_parametros(1, pez_vida_tiempo, reproducir_veces, pez_reproducir_tiempo) }
+    (peces/2).times { Pez.create.definir_parametros(2, pez_vida_tiempo, reproducir_veces, pez_reproducir_tiempo) }
     tiburones.times { Tiburon.create.definir_parametros(tiburon_vida_tiempo) }
 
     # Cuando es un numero impar de peces, se genera un pez con genero al azar
-    Pez.create.definir_parametros(rand(2)+1, pez_vida_tiempo, reproducir_veces) if peces % 2 != 0
+    Pez.create.definir_parametros(rand(2)+1, pez_vida_tiempo, reproducir_veces, pez_reproducir_tiempo) if peces % 2 != 0
 
 
   end # def
@@ -78,7 +85,8 @@ class Motor < Chingu::GameState
         pez2.reproducirse
         reproducir_veces = $configuracion[2][1].to_i
         pez_vida_tiempo = $configuracion[3][1].to_i
-        Pez.create.definir_parametros2(pez1.get_x, pez2.get_y, rand(2)+1, pez_vida_tiempo, reproducir_veces)
+        pez_reproducir_tiempo = $configuracion[6][1].to_i
+        Pez.create.definir_parametros2(pez1.get_x, pez2.get_y, rand(2)+1, pez_vida_tiempo, reproducir_veces, pez_reproducir_tiempo)
       end # if
     end # each
 

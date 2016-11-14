@@ -68,6 +68,8 @@ class Menu < Chingu::GameState
       if @texto_menu[@posicion][1] != "0"
         @texto_menu[@posicion][1] = (@texto_menu[@posicion][1].to_i - 1).to_s
       end # if
+    elsif id == Button::KbHome || id == Button::KbPageUp; @posicion = 0
+    elsif id == Button::KbEnd || id == Button::KbPageDown; @posicion = @texto_menu.size - 1
     elsif id == Button::Kb0; agregar_numero("0")
     elsif id == Button::Kb1; agregar_numero("1")
     elsif id == Button::Kb2; agregar_numero("2")

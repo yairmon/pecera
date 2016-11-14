@@ -6,7 +6,6 @@ include Gosu
 include Chingu
 
 require_relative "logica/motor"
-require_relative "objetos/fondo"
 require_relative "objetos/menu"
 
 #
@@ -20,11 +19,10 @@ class Juego < Chingu::Window
   # Inicializa la ventana con el tamaño y acciones del teclado
   #
   def initialize
-    super(800,800)
+    super(1200,1200)
     self.caption = "Proyecto Vida Artificial" # Titulo de la ventana
     self.input = {:esc => :exit, [:q, :enter, :space] => method(:cambiar_estado)} # Al presionar esc, se cierra la ventana
 
-    push_game_state(Fondo)
     push_game_state(Motor)
     push_game_state(Menu)
   end #def

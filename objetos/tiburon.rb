@@ -13,15 +13,19 @@ require_relative "../logica/direccion"
 #
 
 class Tiburon < Chingu::GameObject
-  traits :collision_detection, :bounding_circle
+  traits :collision_detection, :bounding_circle, :velocity
   #
   # Constructor:
   # Inicializar todos los componentes y valores iniciales
   #
   def initialize
     super
-    @mode = :additive
     @image = Image["tiburon1.png"]
+    # Hacer que el tiburon se mueva
+    @animation = Chingu::Animation.new(:file => "tiburoncompleto_180x73.bmp")
+    @animation.frame_names = { :izquierda => 0...2, :derecha => 2...4, :izquierda_come => 4...6, :derecha_come => 6...8 }
+    @frame_name = :izquierda
+
     @direccion = Direccion.new($window.width, $window.height, 10, @image.width, @image.height)
     @tiburon_hambriento = false
     @z = 1
@@ -35,10 +39,10 @@ class Tiburon < Chingu::GameObject
   # Devuelve verdadero si se encuentra en el rango de la imagen
   #
   def rango?(x, y)
-    izq = @x - (@image.width / 2) + 5
-    der = @x + (@image.width / 2) - 5
-    arriba = @y - (@image.height / 2) + 5
-    abajo = @y + (@image.height / 2) - 5
+    izq = @x - (@image.width / 2)
+    der = @x + (@image.width / 2)
+    arriba = @y - (@image.height / 2)
+    abajo = @y + (@image.height / 2)
 
     return x > izq && x < der && y > arriba && y < abajo
   end # def
@@ -80,6 +84,11 @@ class Tiburon < Chingu::GameObject
   #
   def update
     self.mover
+
+    @image = @animation[@frame_name].next
+    @frame_name = @direccion.izquierda? ? :izquierda : :derecha
+
+
     vivo = Time.now - @vida_inicio
     if vivo > @vida
       @tiburon_hambriento = true
@@ -95,6 +104,10 @@ class Tiburon < Chingu::GameObject
     @tiburon_hambriento = false
     @direccion.disminuir_velocidad
     @libre = true
+
+    @frame_name = @direccion.izquierda? ? :izquierda_come : :derecha_come
+    @image = @animation[@frame_name].next
+    @image = @animation[@frame_name].next
   end # def
 
   #
