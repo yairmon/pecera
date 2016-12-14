@@ -75,7 +75,7 @@ class Motor < Chingu::GameState
     end # each
 
     #Cuando se generan las burbujas
-    if (Time.now - @tiempo_burbuja) > 3
+    if (Time.now - @tiempo_burbuja) > 1
       Burbuja.create
       @tiempo_burbuja = Time.now
     end # if
@@ -144,7 +144,7 @@ class Motor < Chingu::GameState
       elegido = rand(Tiburon.size)
       Tiburon.each do |tiburon|
         if contador == elegido
-          pez.buscar(tiburon.get_x, tiburon.get_y)
+          pez.evitar(tiburon.get_x, tiburon.get_y)
         end # if
         contador += 1
       end # each
