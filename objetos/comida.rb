@@ -19,7 +19,7 @@ class Comida < Chingu::GameObject
     super
     @mode = :additive
     #print "Se crea un pez\n"
-    @image = Image["comida2.png"]
+    @image = Image["comida3.png"]
     @x = rand($window.width)
     @y = rand($window.height)
     @z = 1
