@@ -8,6 +8,8 @@ include Chingu
 require_relative "../objetos/pez"
 require_relative "../objetos/comida"
 require_relative "../objetos/tiburon"
+require_relative "../objetos/burbuja"
+
 
 #
 # Motor:
@@ -55,6 +57,7 @@ class Motor < Chingu::GameState
     # Cuando es un numero impar de peces, se genera un pez con genero al azar
     Pez.create.definir_parametros(rand(2)+1, pez_vida_tiempo, reproducir_veces, pez_reproducir_tiempo) if peces % 2 != 0
 
+    @tiempo_burbuja = Time.now
 
   end # def
 
@@ -70,6 +73,16 @@ class Motor < Chingu::GameState
       pez.comer
       comida.destroy
     end # each
+
+    #Cuando se generan las burbujas
+    if (Time.now - @tiempo_burbuja) > 3
+      Burbuja.create
+      @tiempo_burbuja = Time.now
+    end # if
+
+
+
+
 
     # Cuando ha pasado el tiempo necesario, se genera comida
     if (Time.now - @comida_inicio) > @comida_tasa
@@ -131,7 +144,7 @@ class Motor < Chingu::GameState
       elegido = rand(Tiburon.size)
       Tiburon.each do |tiburon|
         if contador == elegido
-          pez.evitar(tiburon.get_x, tiburon.get_y)
+          pez.buscar(tiburon.get_x, tiburon.get_y)
         end # if
         contador += 1
       end # each
